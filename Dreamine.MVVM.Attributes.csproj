@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
   
    <PackageId>Dreamine.MVVM.Attributes</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Dreamine Core Team</Authors>
     <Company>Dreamine</Company>
     <Description>MVVM 구조에 사용되는 커스텀 Attribute 정의 모듈입니다.</Description>
