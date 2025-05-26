@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
   
    <PackageId>Dreamine.MVVM.Attributes</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Dreamine Core Team</Authors>
     <Company>Dreamine</Company>
     <Description>MVVM 구조에 사용되는 커스텀 Attribute 정의 모듈입니다.</Description>
@@ -17,7 +17,7 @@
     <Title>Dreamine MVVM Attribute Library</Title>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Copyright>© 2025 Dreamine Core Team. All rights reserved.</Copyright>
-    <PackageProjectUrl>https://github.com/dreamine/Dreamine</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/CodeMaru-Dreamine/Dreamine.MVVM.FullKit</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile> 
   </PropertyGroup>
 
