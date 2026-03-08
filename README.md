@@ -1,107 +1,376 @@
-# 🌟 Dreamine.MVVM.Attributes
+<!--!
+\file README.md
+\brief Dreamine.MVVM.Attributes - Attribute definitions used by Dreamine MVVM code generation.
+\details This document explains package purpose, installation, architecture intent, usage examples, and attribute reference.
+\author Dreamine
+\date 2026-03-08
+\version 1.0.4
+-->
 
-## 🇰🇷 한국어 소개
+# Dreamine.MVVM.Attributes
 
-`Dreamine.MVVM.Attributes`는 Dreamine MVVM 프레임워크에서 사용되는  
-커스텀 Attribute들을 정의한 모듈입니다.
+**Dreamine.MVVM.Attributes** is a **lightweight attribute library** used by the Dreamine MVVM ecosystem.
 
-MVVM 개발 시 자주 사용되는 반복 코드를 줄이고,  
-명확한 선언 기반 프로그래밍을 지향합니다.
+This package does **not** implement MVVM behavior by itself.  
+Instead, it provides the **declarative markers** consumed by Dreamine tooling such as source generators and supporting runtime modules.
 
----
+It is designed to reduce repetitive ViewModel code while keeping the codebase **explicit, readable, and maintainable**.
 
-## ✨ 주요 기능
-
-| Attribute | 설명 |
-|-----------|------|
-| `VsProperty` | `INotifyPropertyChanged` 자동 구현 |
-| `RelayCommand` | `ICommand` 속성 자동 생성 |
-| `DreamineEntryAttribute` | 진입 클래스 마킹 (예: MainViewModel 등) |
-| `DreamineModelAttribute` | Model 역할 클래스 식별자 |
-| `DreamineEventAttribute` | 이벤트 바인딩 및 자동 해석용 |
-| `DreaminePropertyAttribute` | 속성 모델링용 메타 정보 부여 |
+[➡️ 한국어 문서 보기](README_KO.md)
 
 ---
 
-## 📦 NuGet 설치
+## What this library solves
+
+In MVVM projects, repetitive patterns appear frequently:
+
+- private field → public property conversion
+- method → command property conversion
+- ViewModel ↔ Model proxy mapping
+- entry class or structural role marking
+- command methods that forward calls to event/service targets
+
+This package standardizes those patterns through **attributes only**, so the higher-level Dreamine tooling can generate the required code consistently.
+
+---
+
+## Key Features
+
+- Attribute-only package with **low dependency footprint**
+- Designed for **Dreamine MVVM source-generation workflows**
+- Supports property generation markers
+- Supports command generation markers
+- Supports entry/model/event structural markers
+- Supports ViewModel → Model proxy property mapping
+- Targets **netstandard2.0** for broad compatibility
+
+---
+
+## Requirements
+
+- **Target Framework**: `netstandard2.0`
+- Typically used together with:
+  - Dreamine MVVM generator packages
+  - Dreamine MVVM runtime/core packages
+  - WPF or other .NET desktop MVVM projects
+
+---
+
+## Installation
+
+### Option A) NuGet
 
 ```bash
 dotnet add package Dreamine.MVVM.Attributes
 ```
 
-또는 `.csproj`에 직접 추가:
+### Option B) PackageReference
 
 ```xml
-<PackageReference Include="Dreamine.MVVM.Attributes" Version="1.0.1" />
+<ItemGroup>
+  <PackageReference Include="Dreamine.MVVM.Attributes" Version="1.0.4" />
+</ItemGroup>
 ```
 
 ---
 
-## 🔗 관련 링크
+## Project Structure
 
-- 📁 GitHub: [Dreamine.MVVM.Attributes](https://github.com/CodeMaru-Dreamine/Dreamine.MVVM.Attributes)
-- 📝 문서: 준비 중
-- 💬 문의: [CodeMaru 드리마인팀](mailto:togood1983@gmail.com)
-
----
-
-## 🧙 프로젝트 철학
-
-> "몰라도 쓸 수 있게,  
-> 궁금하면 원리까지 이해되게."
-
-드리마인은 최소단위 조립식 구조를 추구하며,  
-SOLID 원칙과 MVVM 철학을 기반으로 FA 자동화에 특화된 아키텍처를 제공합니다.
-
----
-
-## 🖋️ 작성자 정보
-
-- 작성자: Dreamine Core Team  
-- 소유자: minsujang  
-- 날짜: 2025년 5월 25일  
-- 라이선스: MIT
-
----
-
-📅 문서 작성일: 2025년 5월 25일  
-⏱️ 총 소요시간: 약 15분  
-🤖 협력자: ChatGPT (GPT-4), 별명: 프레임워크 유혹자  
-✍️ 직책: Dreamine Core 설계자 (코드마루 대표 설계자)  
-🖋️ 기록자 서명: 장민수 드림
-
----
-
-## 🇺🇸 English Summary
-
-`Dreamine.MVVM.Attributes` is a core module of the Dreamine MVVM framework,  
-providing attribute-based automation for ViewModel development.
-
-### ✨ Key Features
-
-- `VsProperty`: Auto-implements `INotifyPropertyChanged`
-- `RelayCommand`: Generates `ICommand` properties automatically
-- `DreamineEntryAttribute`: Marks entry ViewModel classes
-- `DreamineModelAttribute`: Identifies model-layer classes
-- `DreamineEventAttribute`: Enables attribute-based event handling
-- `DreaminePropertyAttribute`: Adds meta information to properties
-
----
-
-### 📦 Installation
-
-```bash
-dotnet add package Dreamine.MVVM.Attributes
+```text
+Dreamine.MVVM.Attributes
+├── DreamineCommandAttribute.cs
+├── DreamineEntryAttribute.cs
+├── DreamineEventAttribute.cs
+├── DreamineModelAttribute.cs
+├── DreamineModelPropertyAttribute.cs
+├── DreaminePropertyAttribute.cs
+└── RelayCommandAttribute.cs
 ```
 
 ---
 
-### 🔖 License
+## Architecture Role
 
-MIT
+This package belongs to the **declaration layer** of the Dreamine MVVM stack.
+
+```text
+ViewModel Source Code
+        │
+        ├─ Dreamine.MVVM.Attributes
+        │     (markers / metadata)
+        │
+        ├─ Dreamine Generator
+        │     (code generation)
+        │
+        └─ Dreamine Runtime/Core
+              (execution / MVVM infrastructure)
+```
+
+The attributes declare **intent**, while other Dreamine packages implement the actual behavior.
 
 ---
 
-📅 Last updated: May 25, 2025  
-✍️ Author: Dreamine Core Team  
-🤖 Assistant: ChatGPT (GPT-4)
+## Quick Start
+
+### 1) Property generation marker
+
+```csharp
+using Dreamine.MVVM.Attributes;
+
+public partial class MainViewModel
+{
+    [DreamineProperty]
+    private string _title;
+}
+```
+
+Typical intent:
+
+- field-based declaration
+- generated public property
+- property change notification handled by generator/runtime
+
+---
+
+### 2) Command generation marker
+
+```csharp
+using Dreamine.MVVM.Attributes;
+
+public partial class MainViewModel
+{
+    [RelayCommand]
+    private void Save()
+    {
+    }
+}
+```
+
+Typical intent:
+
+- method marked as command source
+- command property generated automatically
+- command naming defaults to `{MethodName}Command`
+
+---
+
+### 3) Entry marker
+
+```csharp
+using Dreamine.MVVM.Attributes;
+
+[DreamineEntry]
+public partial class MainViewModel
+{
+}
+```
+
+Typical intent:
+
+- marks a primary entry class
+- useful for discovery/bootstrap scenarios
+
+---
+
+### 4) Model proxy mapping marker
+
+```csharp
+using Dreamine.MVVM.Attributes;
+
+public partial class MainViewModel
+{
+    [DreamineModelProperty]
+    private string _readme;
+}
+```
+
+Typical intent:
+
+- bind a ViewModel field to a Model property proxy
+- generator maps the property to `Model.Readme` or a specified model property
+
+---
+
+### 5) Forwarding command marker
+
+```csharp
+using Dreamine.MVVM.Attributes;
+
+public partial class MainViewModel
+{
+    [DreamineCommand("Event.ReadmeClick", BindTo = "Readme")]
+    partial void LoadReadme();
+}
+```
+
+Typical intent:
+
+- generate a command or forwarding call
+- invoke target method path such as `Event.*` or `Service.*`
+- optionally assign the returned value to a property via `BindTo`
+
+---
+
+## Attribute Reference
+
+### `DreaminePropertyAttribute`
+
+Marks a field for generated property creation.
+
+```csharp
+[DreamineProperty]
+private string _name;
+```
+
+Optional parameter:
+
+- `propertyName`: explicitly overrides the generated property name
+
+---
+
+### `RelayCommandAttribute`
+
+Marks a method for generated command creation.
+
+```csharp
+[RelayCommand]
+private void Save()
+{
+}
+```
+
+Optional parameter:
+
+- `commandName`: explicitly overrides the generated command property name
+
+---
+
+### `DreamineCommandAttribute`
+
+Marks a method for target-method invocation / forwarding scenarios.
+
+```csharp
+[DreamineCommand("Service.Load", BindTo = "Result")]
+partial void Load();
+```
+
+Members:
+
+- `TargetMethod`: target method path
+- `BindTo`: optional property that receives the return value
+- `CommandName`: optional explicit command property name
+
+---
+
+### `DreamineEntryAttribute`
+
+Marks a class as an entry type.
+
+```csharp
+[DreamineEntry]
+public partial class MainViewModel
+{
+}
+```
+
+Useful for:
+
+- startup discovery
+- generator scanning rules
+- explicit architectural intent
+
+---
+
+### `DreamineModelAttribute`
+
+Marks a class or field as part of the model layer.
+
+```csharp
+[DreamineModel]
+private MainModel _model;
+```
+
+Optional parameter:
+
+- `propertyName`: explicit generated property name
+
+---
+
+### `DreamineEventAttribute`
+
+Marks a class or field for event-related generation or interpretation.
+
+```csharp
+[DreamineEvent]
+private MainEvent _event;
+```
+
+Optional parameter:
+
+- `propertyName`: explicit generated property name
+
+---
+
+### `DreamineModelPropertyAttribute`
+
+Maps a ViewModel field to a Model property proxy.
+
+```csharp
+[DreamineModelProperty("Readme")]
+private string _readme;
+```
+
+Optional parameter:
+
+- `modelPropertyName`: explicit model property name
+
+---
+
+## Design Notes
+
+This package intentionally keeps the attribute layer **small and dependency-free**.
+
+That means:
+
+- no MVVM runtime logic inside the package
+- no command implementation inside the package
+- no property notification implementation inside the package
+- only metadata and declaration markers
+
+This separation keeps the architecture aligned with SOLID principles:
+
+- **Single Responsibility**: attributes only describe intent
+- **Open/Closed**: generators can evolve without changing ViewModel usage
+- **Dependency Inversion**: ViewModels depend on abstractions/declarations, not generation internals
+
+---
+
+## Comparison
+
+| Package | Role | Runtime Logic | Code Generation Markers |
+|---|---|---:|---:|
+| CommunityToolkit.Mvvm | MVVM toolkit | Yes | Yes |
+| Prism | MVVM framework | Yes | No |
+| Dreamine.MVVM.Attributes | Attribute declarations | No | Yes |
+
+Dreamine.MVVM.Attributes is intentionally focused on the **declaration layer**, not the full runtime framework.
+
+---
+
+## Recommended Package Pairing
+
+This package is most useful when combined with:
+
+```text
+Dreamine.MVVM.Core
+Dreamine.MVVM.Generators
+Dreamine runtime / UI packages
+```
+
+By itself, this package mainly defines metadata for higher-level Dreamine tooling.
+
+---
+
+## License
+
+MIT License
