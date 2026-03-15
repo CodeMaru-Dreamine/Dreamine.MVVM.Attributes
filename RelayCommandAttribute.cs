@@ -17,7 +17,7 @@ namespace Dreamine.MVVM.Attributes
 		/// RelayCommandAttribute 생성자
 		/// </summary>
 		/// <param name="commandName">명시적 커맨드 속성 이름</param>
-		public RelayCommandAttribute(string commandName = null)
+		public RelayCommandAttribute(string commandName = null!)
 		{
 			CommandName = commandName;
 		}

@@ -1,39 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-  
-   <PackageId>Dreamine.MVVM.Attributes</PackageId>
-    <Version>1.0.4</Version>
-    <Authors>Dreamine Core Team</Authors>
-    <Company>Dreamine</Company>
-    <Description>MVVM 구조에 사용되는 커스텀 Attribute 정의 모듈입니다.</Description>
-    <PackageTags>MVVM;WPF;Dreamine;Attribute</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/CodeMaru-Dreamine/Dreamine.MVVM.Attributes</RepositoryUrl>
-    <PackageIcon>icon.png</PackageIcon>
-    <Title>Dreamine MVVM Attribute Library</Title>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Copyright>© 2025 Dreamine Core Team. All rights reserved.</Copyright>
-    <PackageProjectUrl>https://github.com/CodeMaru-Dreamine/Dreamine.MVVM.FullKit</PackageProjectUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile> 
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
 
-  <ItemGroup>
-    <Content Include="icon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\..\Document\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="..\..\.Templates\Dreamine.MVVM.Template\icon.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+		<PackageId>Dreamine.MVVM.Attributes</PackageId>
+		<Version>1.0.4</Version>
+		<Authors>Dreamine Core Team</Authors>
+		<Company>Dreamine</Company>
+		<Description>Dreamine MVVM 프레임워크에서 소스 생성 및 MVVM 메타데이터에 사용되는 Attribute 정의 모듈입니다.</Description>
+		<PackageTags>mvvm;dreamine;attributes;source-generator</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/CodeMaru-Dreamine/Dreamine.MVVM.Attributes</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/CodeMaru-Dreamine/Dreamine.MVVM.Attributes</PackageProjectUrl>
+		<Title>Dreamine MVVM Attribute Library</Title>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Copyright>© 2025 Dreamine Core Team. All rights reserved.</Copyright>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+	<PropertyGroup>
+		<NoWarn>$(NoWarn);NETSDK1023;</NoWarn>
+	</PropertyGroup>
+	<ItemGroup>		
+		<PackageReference Include="NETStandard.Library" PrivateAssets="all" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="README_KO.md" Pack="true" PackagePath="\" Condition="Exists('README_KO.md')" />
+	</ItemGroup>
 
 </Project>

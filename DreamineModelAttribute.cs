@@ -18,7 +18,7 @@ namespace Dreamine.MVVM.Attributes
 		/// DreaminePropertyAttribute 생성자
 		/// </summary>
 		/// <param name="propertyName">명시적 속성 이름</param>
-		public DreamineModelAttribute(string propertyName = null)
+		public DreamineModelAttribute(string propertyName = null!)
 		{
 			PropertyName = propertyName;
 		}
