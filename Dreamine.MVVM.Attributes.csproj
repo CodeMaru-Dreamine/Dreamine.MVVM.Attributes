@@ -6,29 +6,33 @@
 		<Nullable>enable</Nullable>
 
 		<PackageId>Dreamine.MVVM.Attributes</PackageId>
-		<Version>1.0.4</Version>
+		<Version>1.0.5</Version>
 		<Authors>Dreamine Core Team</Authors>
 		<Company>Dreamine</Company>
-		<Description>Dreamine MVVM 프레임워크에서 소스 생성 및 MVVM 메타데이터에 사용되는 Attribute 정의 모듈입니다.</Description>
-		<PackageTags>mvvm;dreamine;attributes;source-generator</PackageTags>
+		<Description>Attribute definitions used by the Dreamine MVVM source-generation pipeline.</Description>
+		<PackageTags>dreamine;mvvm;attributes;source-generator</PackageTags>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/CodeMaru-Dreamine/Dreamine.MVVM.Attributes</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/CodeMaru-Dreamine/Dreamine.MVVM.Attributes</PackageProjectUrl>
-		<Title>Dreamine MVVM Attribute Library</Title>
+		<Title>Dreamine.MVVM.Attributes</Title>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Copyright>© 2025 Dreamine Core Team. All rights reserved.</Copyright>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>icon.png</PackageIcon>
 	</PropertyGroup>
+
 	<PropertyGroup>
 		<NoWarn>$(NoWarn);NETSDK1023;</NoWarn>
 	</PropertyGroup>
-	<ItemGroup>		
+
+	<ItemGroup>
 		<PackageReference Include="NETStandard.Library" PrivateAssets="all" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="\" />
 		<None Include="README_KO.md" Pack="true" PackagePath="\" Condition="Exists('README_KO.md')" />
+		<None Include="icon.png" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 </Project>
