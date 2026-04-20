@@ -1,22 +1,22 @@
 <!--!
 \file README_KO.md
-\brief Dreamine.MVVM.Attributes - Dreamine MVVM 코드 생성을 위한 Attribute 정의 모듈.
-\details 패키지 목적, 설치, 아키텍처 역할, 사용 예제, Attribute 설명을 정리합니다.
+\brief Dreamine.MVVM.Attributes - Dreamine MVVM 코드 생성을 위한 Attribute 정의 모음
+\details 이 문서는 패키지 목적, 설치 방법, 아키텍처 역할, 사용 예제, Attribute 참조를 설명합니다.
 \author Dreamine
-\date 2026-03-08
-\version 1.0.4
+\date 2026-04-20
+\version 1.0.6
 -->
 
 # Dreamine.MVVM.Attributes
 
-**Dreamine.MVVM.Attributes**는 Dreamine MVVM 생태계에서 사용하는 **경량 Attribute 정의 패키지**입니다.
+**Dreamine.MVVM.Attributes**는 Dreamine MVVM 생태계에서 사용하는 경량 Attribute 라이브러리입니다.
 
-이 패키지는 MVVM 동작 자체를 직접 구현하지 않습니다.  
-대신 Dreamine의 소스 제너레이터 및 런타임 패키지들이 해석할 **선언용 마커(Attribute)** 를 제공합니다.
+이 패키지는 자체적으로 MVVM 동작을 구현하지 않습니다.  
+대신 소스 생성기와 런타임 모듈 등 Dreamine 도구가 해석하는 선언용 마커를 제공합니다.
 
-즉, 반복적인 ViewModel 코드를 줄이기 위한 **선언 계층**이라고 보면 됩니다.
+목표는 반복적인 ViewModel 코드를 줄이면서도 코드베이스를 명시적이고, 읽기 쉽고, 유지보수 가능하게 유지하는 것입니다.
 
-[➡️ English Version](README.md)
+[➡️ English Documentation](README.md)
 
 ---
 
@@ -24,47 +24,47 @@
 
 MVVM 프로젝트에서는 다음과 같은 반복 패턴이 자주 발생합니다.
 
-- private field → public property 변환
-- method → command property 변환
+- private field → public property 생성
+- method → command property 생성
 - ViewModel ↔ Model 프록시 매핑
-- 엔트리 클래스 / 구조적 역할 마킹
-- 특정 Event/Service 메서드로 위임되는 커맨드 선언
+- 엔트리 타입 또는 구조적 역할 표시
+- event/service 대상을 호출하는 커맨드 메서드 선언
 
-이 패키지는 이러한 반복 구조를 **Attribute 기반 선언 방식**으로 통일하여, 상위 Dreamine 도구들이 일관되게 코드를 생성할 수 있도록 돕습니다.
+이 패키지는 이러한 패턴을 Attribute만으로 표준화하며, 상위 Dreamine 도구가 일관된 방식으로 필요한 코드를 생성할 수 있도록 합니다.
 
 ---
 
 ## 주요 기능
 
-- 의존성이 거의 없는 **Attribute 전용 패키지**
-- Dreamine MVVM **소스 생성 워크플로우**를 위한 설계
-- 프로퍼티 생성용 마커 제공
-- 커맨드 생성용 마커 제공
-- 엔트리 / 모델 / 이벤트 구조 마커 제공
-- ViewModel → Model 프록시 속성 매핑 지원
-- **netstandard2.0** 대상이라 호환 범위가 넓음
+- 의존성이 적은 Attribute 전용 패키지
+- Dreamine MVVM 소스 생성 워크플로우를 위해 설계됨
+- 프로퍼티 생성용 마커 지원
+- 커맨드 생성용 마커 지원
+- 엔트리/모델/이벤트 구조 마커 지원
+- ViewModel → Model 프록시 프로퍼티 매핑 지원
+- 폭넓은 호환성을 위한 `netstandard2.0` 대상
 
 ---
 
-## 요구사항
+## 요구 사항
 
-- **Target Framework**: `netstandard2.0`
-- 일반적으로 아래 패키지와 함께 사용합니다.
+- **대상 프레임워크**: `netstandard2.0`
+- 일반적으로 함께 사용되는 패키지:
   - Dreamine MVVM Generator 패키지
   - Dreamine MVVM Runtime/Core 패키지
-  - WPF 등 .NET 데스크톱 MVVM 프로젝트
+  - WPF 또는 기타 .NET 데스크톱 MVVM 프로젝트
 
 ---
 
 ## 설치
 
-### 옵션 A) NuGet
+### 방법 A) NuGet
 
 ```bash
 dotnet add package Dreamine.MVVM.Attributes
 ```
 
-### 옵션 B) PackageReference
+### 방법 B) PackageReference
 
 ```xml
 <ItemGroup>
@@ -91,22 +91,28 @@ Dreamine.MVVM.Attributes
 
 ## 아키텍처 역할
 
-이 패키지는 Dreamine MVVM 스택에서 **선언 계층** 역할을 담당합니다.
+이 패키지는 Dreamine MVVM 스택의 선언 계층에 속합니다.
 
 ```text
 ViewModel Source Code
         │
         ├─ Dreamine.MVVM.Attributes
-        │     (마커 / 메타데이터)
+        │     (markers / metadata)
         │
         ├─ Dreamine Generator
-        │     (코드 생성)
+        │     (code generation)
         │
         └─ Dreamine Runtime/Core
-              (실행 / MVVM 인프라)
+              (execution / MVVM infrastructure)
 ```
 
-즉, Attribute는 **의도(intent)** 를 선언하고, 실제 동작은 다른 Dreamine 패키지가 담당합니다.
+Attribute는 의도를 선언하고, 실제 동작은 다른 Dreamine 패키지가 구현합니다.
+
+이 분리는 책임을 명확히 유지하는 데 도움이 됩니다.
+
+- Attribute는 메타데이터만 설명함
+- Generator는 해당 메타데이터를 기반으로 코드를 생성함
+- Runtime 패키지는 생성된 동작을 실행함
 
 ---
 
@@ -128,7 +134,7 @@ public partial class MainViewModel
 
 - 필드 기반 선언
 - public 프로퍼티 자동 생성
-- 속성 변경 알림은 제너레이터 / 런타임이 처리
+- property change notification은 generator/runtime가 처리
 
 ---
 
@@ -148,7 +154,7 @@ public partial class MainViewModel
 
 의도:
 
-- 메서드를 커맨드 원본으로 표시
+- 메서드를 커맨드 소스로 표시
 - 커맨드 프로퍼티 자동 생성
 - 기본 이름은 `{MethodName}Command`
 
@@ -160,15 +166,16 @@ public partial class MainViewModel
 using Dreamine.MVVM.Attributes;
 
 [DreamineEntry]
-public partial class MainViewModel
+public partial class App
 {
 }
 ```
 
 의도:
 
-- 주요 진입 클래스를 표시
-- 검색 / 부트스트랩 시나리오에서 활용 가능
+- 애플리케이션 엔트리 또는 부트스트랩 타입 표시
+- discovery/bootstrap 시나리오에서 유용
+- Dreamine 도구에 명시적인 진입 역할 전달
 
 ---
 
@@ -186,12 +193,12 @@ public partial class MainViewModel
 
 의도:
 
-- ViewModel 필드를 Model 프로퍼티 프록시로 연결
-- 제너레이터가 `Model.Readme` 또는 지정된 이름으로 매핑
+- ViewModel 필드를 Model 프로퍼티 프록시에 연결
+- generator가 `Model.Readme` 또는 지정된 Model 프로퍼티로 매핑
 
 ---
 
-### 5) 위임 커맨드 마커
+### 5) 전달형 커맨드 마커
 
 ```csharp
 using Dreamine.MVVM.Attributes;
@@ -205,32 +212,32 @@ public partial class MainViewModel
 
 의도:
 
-- 명시된 대상 메서드 호출 코드 생성
-- `Event.*`, `Service.*` 같은 경로 기반 위임
-- `BindTo`를 통해 반환값 자동 대입 가능
+- 대상 메서드 경로를 호출하는 커맨드 생성
+- `Event.*`, `Service.*` 같은 대상 경로 지원
+- 필요 시 `BindTo`를 통해 반환값을 프로퍼티에 대입
 
 ---
 
-## Attribute 설명
+## Attribute 참조
 
 ### `DreaminePropertyAttribute`
 
-필드를 생성 프로퍼티 대상으로 표시합니다.
+필드를 프로퍼티 생성 대상으로 표시합니다.
 
 ```csharp
 [DreamineProperty]
 private string _name;
 ```
 
-옵션:
+선택 파라미터:
 
-- `propertyName`: 생성될 프로퍼티 이름 강제 지정
+- `propertyName`: 생성될 프로퍼티 이름을 명시적으로 지정
 
 ---
 
 ### `RelayCommandAttribute`
 
-메서드를 생성 커맨드 대상으로 표시합니다.
+메서드를 커맨드 생성 대상으로 표시합니다.
 
 ```csharp
 [RelayCommand]
@@ -239,111 +246,122 @@ private void Save()
 }
 ```
 
-옵션:
+선택 파라미터:
 
-- `commandName`: 생성될 커맨드 프로퍼티 이름 강제 지정
+- `commandName`: 생성될 커맨드 프로퍼티 이름을 명시적으로 지정
 
 ---
 
 ### `DreamineCommandAttribute`
 
-특정 대상 메서드를 호출하는 위임/포워딩 시나리오를 선언합니다.
+메서드를 대상 메서드 호출 시나리오용으로 표시합니다.
 
 ```csharp
 [DreamineCommand("Service.Load", BindTo = "Result")]
 partial void Load();
 ```
 
-주요 멤버:
+멤버:
 
-- `TargetMethod`: 호출 대상 메서드 경로
-- `BindTo`: 반환값을 대입할 프로퍼티명
-- `CommandName`: 강제 커맨드 이름
+- `TargetMethod`: 대상 메서드 경로
+- `BindTo`: 반환값을 받을 선택적 프로퍼티
+- `CommandName`: 명시적으로 지정할 커맨드 프로퍼티 이름
+
+이 Attribute는 생성된 커맨드가 주석이 붙은 메서드 본문을 직접 감싸는 것이 아니라,
+알려진 대상 경로로 실행을 위임해야 하는 경우에 사용합니다.
 
 ---
 
 ### `DreamineEntryAttribute`
 
-클래스를 엔트리 타입으로 표시합니다.
+클래스를 엔트리 또는 부트스트랩 타입으로 표시합니다.
 
 ```csharp
 [DreamineEntry]
-public partial class MainViewModel
+public partial class App
 {
 }
 ```
 
-활용 예:
+사용 예:
 
-- 시작점 검색
-- 제너레이터 스캔 규칙
-- 아키텍처 의도 표현
+- startup discovery
+- generator scanning rules
+- 명시적인 아키텍처 의도 표현
 
 ---
 
 ### `DreamineModelAttribute`
 
-클래스 또는 필드를 모델 계층 대상으로 표시합니다.
+클래스 또는 필드를 모델 관련 구조로 표시합니다.
 
 ```csharp
 [DreamineModel]
 private MainModel _model;
 ```
 
-옵션:
+일반적인 해석:
 
-- `propertyName`: 생성될 프로퍼티 이름 지정
+- 클래스에 적용: 해당 타입이 모델 관련 메타데이터임을 표시
+- 필드에 적용: 모델 관련 멤버임을 표시하여 생성 또는 해석 대상이 되게 함
+
+선택 파라미터:
+
+- `propertyName`: 생성될 프로퍼티 이름을 명시적으로 지정
 
 ---
 
 ### `DreamineEventAttribute`
 
-클래스 또는 필드를 이벤트 관련 대상으로 표시합니다.
+클래스 또는 필드를 이벤트 관련 구조로 표시합니다.
 
 ```csharp
 [DreamineEvent]
 private MainEvent _event;
 ```
 
-옵션:
+일반적인 해석:
 
-- `propertyName`: 생성될 프로퍼티 이름 지정
+- 클래스에 적용: 해당 타입이 이벤트 관련 메타데이터임을 표시
+- 필드에 적용: 이벤트 관련 멤버임을 표시하여 생성 또는 해석 대상이 되게 함
+
+선택 파라미터:
+
+- `propertyName`: 생성될 프로퍼티 이름을 명시적으로 지정
 
 ---
 
 ### `DreamineModelPropertyAttribute`
 
-ViewModel 필드를 Model 프로퍼티 프록시로 매핑합니다.
+ViewModel 필드를 Model 프로퍼티 프록시에 매핑합니다.
 
 ```csharp
 [DreamineModelProperty("Readme")]
 private string _readme;
 ```
 
-옵션:
+선택 파라미터:
 
-- `modelPropertyName`: Model의 실제 프로퍼티 이름 지정
+- `modelPropertyName`: 명시적으로 지정할 Model 프로퍼티 이름
 
 ---
 
 ## 설계 노트
 
-이 패키지는 의도적으로 **작고 가벼운 선언 계층**만 유지합니다.
+이 패키지는 의도적으로 Attribute 계층을 작고, 의존성 없이 유지합니다.
 
-즉, 이 안에는 없습니다.
+즉 다음을 포함하지 않습니다.
 
 - MVVM 런타임 로직
-- ICommand 구현체
-- PropertyChanged 구현
-- 실행 코드
+- 커맨드 구현
+- 프로퍼티 변경 알림 구현
+- 선언 외의 실행 로직
 
-오직 **메타데이터와 선언 마커**만 존재합니다.
+이 분리는 전체 아키텍처에서 책임을 분리하는 방향과 잘 맞습니다.
 
-이 구조는 SOLID 관점에서도 장점이 있습니다.
-
-- **SRP**: Attribute는 의도만 표현
-- **OCP**: 제너레이터 확장 시 ViewModel 사용 방식은 유지
-- **DIP**: ViewModel이 생성 내부 구현에 직접 의존하지 않음
+- Attribute 패키지는 선언만 담당
+- Generator는 독립적으로 진화 가능
+- Runtime 동작은 선언 계층 밖에 유지
 
 ---
 
@@ -351,17 +369,17 @@ private string _readme;
 
 | 패키지 | 역할 | 런타임 로직 | 코드 생성 마커 |
 |---|---|---:|---:|
-| CommunityToolkit.Mvvm | MVVM 툴킷 | 예 | 예 |
-| Prism | MVVM 프레임워크 | 예 | 아니오 |
-| Dreamine.MVVM.Attributes | Attribute 선언 | 아니오 | 예 |
+| CommunityToolkit.Mvvm | MVVM 툴킷 | Yes | Yes |
+| Prism | MVVM 프레임워크 | Yes | No |
+| Dreamine.MVVM.Attributes | Attribute 선언 | No | Yes |
 
-Dreamine.MVVM.Attributes는 전체 프레임워크가 아니라 **선언 전용 모듈**이라는 점이 핵심입니다.
+Dreamine.MVVM.Attributes는 전체 런타임 프레임워크가 아니라 선언 계층에 집중합니다.
 
 ---
 
-## 함께 쓰면 좋은 패키지
+## 권장 조합 패키지
 
-이 패키지는 보통 아래와 함께 사용할 때 가장 유용합니다.
+이 패키지는 아래와 함께 사용할 때 가장 유용합니다.
 
 ```text
 Dreamine.MVVM.Core
@@ -369,10 +387,10 @@ Dreamine.MVVM.Generators
 Dreamine runtime / UI packages
 ```
 
-단독으로도 참조는 가능하지만, 주된 목적은 상위 Dreamine 툴링을 위한 메타데이터 제공입니다.
+이 패키지 단독으로는 상위 Dreamine 도구가 사용하는 메타데이터를 주로 정의합니다.
 
 ---
 
-## License
+## 라이선스
 
 MIT License

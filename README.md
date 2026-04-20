@@ -3,20 +3,20 @@
 \brief Dreamine.MVVM.Attributes - Attribute definitions used by Dreamine MVVM code generation.
 \details This document explains package purpose, installation, architecture intent, usage examples, and attribute reference.
 \author Dreamine
-\date 2026-03-08
-\version 1.0.4
+\date 2026-04-20
+\version 1.0.6
 -->
 
 # Dreamine.MVVM.Attributes
 
-**Dreamine.MVVM.Attributes** is a **lightweight attribute library** used by the Dreamine MVVM ecosystem.
+**Dreamine.MVVM.Attributes** is a lightweight attribute library used by the Dreamine MVVM ecosystem.
 
 This package does **not** implement MVVM behavior by itself.  
-Instead, it provides the **declarative markers** consumed by Dreamine tooling such as source generators and supporting runtime modules.
+Instead, it provides declarative markers consumed by Dreamine tooling such as source generators and supporting runtime modules.
 
-It is designed to reduce repetitive ViewModel code while keeping the codebase **explicit, readable, and maintainable**.
+It is designed to reduce repetitive ViewModel code while keeping the codebase explicit, readable, and maintainable.
 
-[➡️ 한국어 문서 보기](README_KO.md)
+[➡️ 한국어 문서 보기](./README_KO.md)
 
 ---
 
@@ -24,25 +24,25 @@ It is designed to reduce repetitive ViewModel code while keeping the codebase **
 
 In MVVM projects, repetitive patterns appear frequently:
 
-- private field → public property conversion
-- method → command property conversion
+- private field → public property generation
+- method → command property generation
 - ViewModel ↔ Model proxy mapping
-- entry class or structural role marking
+- entry type or structural role marking
 - command methods that forward calls to event/service targets
 
-This package standardizes those patterns through **attributes only**, so the higher-level Dreamine tooling can generate the required code consistently.
+This package standardizes those patterns through attributes only, so higher-level Dreamine tooling can generate the required code consistently.
 
 ---
 
 ## Key Features
 
-- Attribute-only package with **low dependency footprint**
-- Designed for **Dreamine MVVM source-generation workflows**
+- Attribute-only package with a low dependency footprint
+- Designed for Dreamine MVVM source-generation workflows
 - Supports property generation markers
 - Supports command generation markers
 - Supports entry/model/event structural markers
 - Supports ViewModel → Model proxy property mapping
-- Targets **netstandard2.0** for broad compatibility
+- Targets `netstandard2.0` for broad compatibility
 
 ---
 
@@ -91,7 +91,7 @@ Dreamine.MVVM.Attributes
 
 ## Architecture Role
 
-This package belongs to the **declaration layer** of the Dreamine MVVM stack.
+This package belongs to the declaration layer of the Dreamine MVVM stack.
 
 ```text
 ViewModel Source Code
@@ -106,7 +106,13 @@ ViewModel Source Code
               (execution / MVVM infrastructure)
 ```
 
-The attributes declare **intent**, while other Dreamine packages implement the actual behavior.
+The attributes declare intent, while other Dreamine packages implement the actual behavior.
+
+This separation helps keep responsibilities clear:
+
+- Attributes describe metadata only
+- Generators produce code from that metadata
+- Runtime packages execute the generated behavior
 
 ---
 
@@ -160,15 +166,16 @@ Typical intent:
 using Dreamine.MVVM.Attributes;
 
 [DreamineEntry]
-public partial class MainViewModel
+public partial class App
 {
 }
 ```
 
 Typical intent:
 
-- marks a primary entry class
+- marks an application entry or bootstrap type
 - useful for discovery/bootstrap scenarios
+- makes the intended entry role explicit to Dreamine tooling
 
 ---
 
@@ -205,8 +212,8 @@ public partial class MainViewModel
 
 Typical intent:
 
-- generate a command or forwarding call
-- invoke target method path such as `Event.*` or `Service.*`
+- generate a command that invokes a target method path
+- support target paths such as `Event.*` or `Service.*`
 - optionally assign the returned value to a property via `BindTo`
 
 ---
@@ -247,7 +254,7 @@ Optional parameter:
 
 ### `DreamineCommandAttribute`
 
-Marks a method for target-method invocation / forwarding scenarios.
+Marks a method for target-method invocation scenarios.
 
 ```csharp
 [DreamineCommand("Service.Load", BindTo = "Result")]
@@ -260,15 +267,17 @@ Members:
 - `BindTo`: optional property that receives the return value
 - `CommandName`: optional explicit command property name
 
+Use this attribute when a generated command must delegate execution to a known target path rather than directly wrapping the annotated method body.
+
 ---
 
 ### `DreamineEntryAttribute`
 
-Marks a class as an entry type.
+Marks a class as an entry or bootstrap type.
 
 ```csharp
 [DreamineEntry]
-public partial class MainViewModel
+public partial class App
 {
 }
 ```
@@ -283,12 +292,17 @@ Useful for:
 
 ### `DreamineModelAttribute`
 
-Marks a class or field as part of the model layer.
+Marks a class or field as part of the model-related structure.
 
 ```csharp
 [DreamineModel]
 private MainModel _model;
 ```
+
+Typical interpretation:
+
+- on a class: identifies the type as model-related metadata
+- on a field: identifies a model-related member for generation or interpretation
 
 Optional parameter:
 
@@ -298,12 +312,17 @@ Optional parameter:
 
 ### `DreamineEventAttribute`
 
-Marks a class or field for event-related generation or interpretation.
+Marks a class or field as part of the event-related structure.
 
 ```csharp
 [DreamineEvent]
 private MainEvent _event;
 ```
+
+Typical interpretation:
+
+- on a class: identifies the type as event-related metadata
+- on a field: identifies an event-related member for generation or interpretation
 
 Optional parameter:
 
@@ -328,7 +347,7 @@ Optional parameter:
 
 ## Design Notes
 
-This package intentionally keeps the attribute layer **small and dependency-free**.
+This package intentionally keeps the attribute layer small and dependency-free.
 
 That means:
 
@@ -337,11 +356,11 @@ That means:
 - no property notification implementation inside the package
 - only metadata and declaration markers
 
-This separation keeps the architecture aligned with SOLID principles:
+This separation aligns well with the overall architectural goal of keeping responsibilities isolated:
 
-- **Single Responsibility**: attributes only describe intent
-- **Open/Closed**: generators can evolve without changing ViewModel usage
-- **Dependency Inversion**: ViewModels depend on abstractions/declarations, not generation internals
+- the attribute package focuses on declaration only
+- generators can evolve independently
+- runtime behavior stays outside the declaration layer
 
 ---
 
@@ -353,7 +372,7 @@ This separation keeps the architecture aligned with SOLID principles:
 | Prism | MVVM framework | Yes | No |
 | Dreamine.MVVM.Attributes | Attribute declarations | No | Yes |
 
-Dreamine.MVVM.Attributes is intentionally focused on the **declaration layer**, not the full runtime framework.
+Dreamine.MVVM.Attributes is intentionally focused on the declaration layer, not the full runtime framework.
 
 ---
 
