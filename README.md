@@ -83,8 +83,7 @@ Dreamine.MVVM.Attributes
 ├── DreamineEventAttribute.cs
 ├── DreamineModelAttribute.cs
 ├── DreamineModelPropertyAttribute.cs
-├── DreaminePropertyAttribute.cs
-└── RelayCommandAttribute.cs
+└── DreaminePropertyAttribute.cs
 ```
 
 ---
@@ -145,7 +144,7 @@ using Dreamine.MVVM.Attributes;
 
 public partial class MainViewModel
 {
-    [RelayCommand]
+    [DreamineCommand]
     private void Save()
     {
     }
@@ -235,26 +234,20 @@ Optional parameter:
 
 ---
 
-### `RelayCommandAttribute`
+### `DreamineCommandAttribute`
 
 Marks a method for generated command creation.
 
+Use it without constructor arguments when the generated command should execute the annotated method directly.
+
 ```csharp
-[RelayCommand]
+[DreamineCommand]
 private void Save()
 {
 }
 ```
 
-Optional parameter:
-
-- `commandName`: explicitly overrides the generated command property name
-
----
-
-### `DreamineCommandAttribute`
-
-Marks a method for target-method invocation scenarios.
+Use it with `TargetMethod` when the generated command should forward execution to another target path.
 
 ```csharp
 [DreamineCommand("Service.Load", BindTo = "Result")]
@@ -267,7 +260,7 @@ Members:
 - `BindTo`: optional property that receives the return value
 - `CommandName`: optional explicit command property name
 
-Use this attribute when a generated command must delegate execution to a known target path rather than directly wrapping the annotated method body.
+`DreamineCommandAttribute` replaces the old relay-command marker surface so users only need one command-generation marker.
 
 ---
 

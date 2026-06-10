@@ -3,10 +3,11 @@
 namespace Dreamine.MVVM.Attributes
 {
     /// <summary>
-    /// 대상 메서드를 호출하는 커맨드 생성을 지정하는 특성입니다.
+    /// 메서드를 커맨드 생성 대상으로 표시하는 특성입니다.
     /// </summary>
     /// <remarks>
-    /// 지정된 <see cref="TargetMethod"/>를 호출하는 커맨드를 생성하며,
+    /// 대상 메서드가 지정되지 않으면 이 특성이 적용된 메서드를 직접 실행하는 커맨드를 생성합니다.
+    /// 대상 메서드가 지정되면 <see cref="TargetMethod"/>를 호출하는 forwarding command를 생성하며,
     /// 필요 시 반환값을 <see cref="BindTo"/>에 지정한 프로퍼티에 자동 대입합니다.
     /// <para>예: <c>Event.ReadmeClick</c>, <c>Service.Load</c>, <c>Foo</c></para>
     /// <para>
@@ -20,7 +21,7 @@ namespace Dreamine.MVVM.Attributes
         /// <summary>
         /// 호출할 대상 메서드 경로를 가져옵니다.
         /// </summary>
-        public string TargetMethod { get; }
+        public string? TargetMethod { get; }
 
         /// <summary>
         /// 대상 메서드의 반환값을 자동 대입할 프로퍼티 이름을 가져오거나 설정합니다.
@@ -41,10 +42,14 @@ namespace Dreamine.MVVM.Attributes
         /// <summary>
         /// <see cref="DreamineCommandAttribute"/> 클래스의 새 인스턴스를 초기화합니다.
         /// </summary>
+        public DreamineCommandAttribute()
+        {
+        }
+
+        /// <summary>
+        /// <see cref="DreamineCommandAttribute"/> 클래스의 새 인스턴스를 초기화합니다.
+        /// </summary>
         /// <param name="targetMethod">호출할 대상 메서드 경로입니다.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="targetMethod"/>가 null인 경우 발생합니다.
-        /// </exception>
         public DreamineCommandAttribute(string targetMethod)
         {
             TargetMethod = targetMethod ?? throw new ArgumentNullException(nameof(targetMethod));

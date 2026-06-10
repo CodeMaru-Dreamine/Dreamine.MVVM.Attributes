@@ -83,8 +83,7 @@ Dreamine.MVVM.Attributes
 ├── DreamineEventAttribute.cs
 ├── DreamineModelAttribute.cs
 ├── DreamineModelPropertyAttribute.cs
-├── DreaminePropertyAttribute.cs
-└── RelayCommandAttribute.cs
+└── DreaminePropertyAttribute.cs
 ```
 
 ---
@@ -145,7 +144,7 @@ using Dreamine.MVVM.Attributes;
 
 public partial class MainViewModel
 {
-    [RelayCommand]
+    [DreamineCommand]
     private void Save()
     {
     }
@@ -235,26 +234,20 @@ private string _name;
 
 ---
 
-### `RelayCommandAttribute`
+### `DreamineCommandAttribute`
 
 메서드를 커맨드 생성 대상으로 표시합니다.
 
+생성자 인자 없이 사용하면 생성된 커맨드가 주석이 붙은 메서드를 직접 실행합니다.
+
 ```csharp
-[RelayCommand]
+[DreamineCommand]
 private void Save()
 {
 }
 ```
 
-선택 파라미터:
-
-- `commandName`: 생성될 커맨드 프로퍼티 이름을 명시적으로 지정
-
----
-
-### `DreamineCommandAttribute`
-
-메서드를 대상 메서드 호출 시나리오용으로 표시합니다.
+`TargetMethod`를 지정하면 생성된 커맨드가 다른 대상 경로로 실행을 전달합니다.
 
 ```csharp
 [DreamineCommand("Service.Load", BindTo = "Result")]
@@ -267,8 +260,7 @@ partial void Load();
 - `BindTo`: 반환값을 받을 선택적 프로퍼티
 - `CommandName`: 명시적으로 지정할 커맨드 프로퍼티 이름
 
-이 Attribute는 생성된 커맨드가 주석이 붙은 메서드 본문을 직접 감싸는 것이 아니라,
-알려진 대상 경로로 실행을 위임해야 하는 경우에 사용합니다.
+`DreamineCommandAttribute`는 기존 relay-command 마커 역할까지 통합하므로 커맨드 생성 마커는 하나만 사용하면 됩니다.
 
 ---
 
