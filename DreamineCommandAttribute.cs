@@ -40,6 +40,17 @@ namespace Dreamine.MVVM.Attributes
         public string? CommandName { get; set; }
 
         /// <summary>
+        /// 실행 가능 여부를 판단하는 메서드 이름을 가져오거나 설정합니다.
+        /// </summary>
+        /// <remarks>
+        /// 지정하면 생성된 커맨드의 <c>CanExecute</c>가 해당 메서드를 호출합니다.
+        /// 반드시 <c>bool</c> 반환형이며 매개변수 없는 메서드여야 합니다.
+        /// 예: <c>[DreamineCommand(CanExecute = nameof(CanSave))]</c>
+        /// 지정하지 않으면 항상 <c>true</c>를 반환합니다.
+        /// </remarks>
+        public string? CanExecute { get; set; }
+
+        /// <summary>
         /// <see cref="DreamineCommandAttribute"/> 클래스의 새 인스턴스를 초기화합니다.
         /// </summary>
         public DreamineCommandAttribute()
